@@ -11,6 +11,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Collects the numbers from a given source
+ * @author Nelson
+ *
+ */
 public class NumberCollector {
 	
 	
@@ -23,11 +28,11 @@ public class NumberCollector {
 	}
 	
 	
-	public Map<String, int[]>  getQuebec49TirageNumbers(int pYear)  {
+	public Map<String, Integer[]>  getQuebec49TirageNumbers(int pYear)  {
 		
 		String mainURl = "https://loteries.espacejeux.com/fr/loteries/quebec-49?annee="+pYear+"&widget=resultats-anterieurs&noProduit=214#res";
 		
-		Map<String, int[]> tirages =  new HashMap<String, int[]>();
+		Map<String, Integer[]> tirages =  new HashMap<String, Integer[]>();
 		
 		try {
 			
@@ -44,8 +49,8 @@ public class NumberCollector {
 			tableRows.remove(0);
 			
 			// Start the csv writing			
-			String csvFile = "C:\\DEV\\Eclipse-Workspaces\\NGLotoStat\\src\\data\\Quebec49_"+pYear+".csv";
-	        FileWriter writer = new FileWriter(csvFile);
+		   // String csvFile = "C:\\DEV\\Eclipse-Workspaces\\NGLotoStat\\src\\data\\Quebec49_"+pYear+".csv";
+	       // FileWriter writer = new FileWriter(csvFile);
 
 
 			// Now for each table row, get the numbers
@@ -69,8 +74,6 @@ public class NumberCollector {
 			    CSVWritter.writeLine(writer, entriesForCSV);
 				*/
 				
-				
-				//int [] numbers  ew int[] {2, 18, 22, 23, 28, 48, 33}
 				/*
 				//System.out.println(date);
 				int [] numbers = new int[7];
@@ -87,7 +90,7 @@ public class NumberCollector {
 				*/
 				//System.out.println(numbers.toString());
 				
-				tirages.put(date,  new int[] {Integer.parseInt(tableSpans.get(0).text()),
+				tirages.put(date,  new Integer[] {Integer.parseInt(tableSpans.get(0).text()),
 						                      Integer.parseInt(tableSpans.get(1).text()), 
 						                      Integer.parseInt(tableSpans.get(2).text()),
 						                      Integer.parseInt(tableSpans.get(3).text()),
@@ -98,10 +101,10 @@ public class NumberCollector {
 				
 			}
 			
-
+/*
 	        writer.flush();
 	        writer.close();
-
+*/
 			
 		}catch(Exception e) {
 			e.printStackTrace();
