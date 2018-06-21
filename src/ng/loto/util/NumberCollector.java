@@ -1,6 +1,9 @@
 package ng.loto.util;
 
+import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jsoup.Jsoup;
@@ -18,8 +21,6 @@ public class NumberCollector {
 		nc.getQuebec49TirageNumbers(2017);
 
 	}
-	
-	
 	
 	
 	public Map<String, int[]>  getQuebec49TirageNumbers(int pYear)  {
@@ -42,16 +43,37 @@ public class NumberCollector {
 			// remove the header TR
 			tableRows.remove(0);
 			
+			// Start the csv writing			
+			String csvFile = "C:\\DEV\\Eclipse-Workspaces\\NGLotoStat\\src\\data\\Quebec49_"+pYear+".csv";
+	        FileWriter writer = new FileWriter(csvFile);
+
+
 			// Now for each table row, get the numbers
+			// List<String> entriesForCSV = null;
 			for (Element tableRow: tableRows) {
 				
 				String date = tableRow.getElementsByClass("date").text();
-				
-				//System.out.println(date);
-				
-				int [] numbers = new int[7];
-				// get the spans
 				Elements tableSpans = table.getElementsByTag("span");
+				
+				/*
+				entriesForCSV =  new ArrayList<String>();
+				entriesForCSV.add(date);
+				entriesForCSV.add(tableSpans.get(0).text());
+				entriesForCSV.add(tableSpans.get(1).text());
+				entriesForCSV.add(tableSpans.get(2).text());
+				entriesForCSV.add(tableSpans.get(3).text());
+				entriesForCSV.add(tableSpans.get(4).text());
+				entriesForCSV.add(tableSpans.get(5).text());
+				entriesForCSV.add(tableSpans.get(6).text());
+				
+			    CSVWritter.writeLine(writer, entriesForCSV);
+				*/
+				
+				
+				//int [] numbers  ew int[] {2, 18, 22, 23, 28, 48, 33}
+				/*
+				//System.out.println(date);
+				int [] numbers = new int[7];
 				// get the seven numbers;
 				numbers[0] = Integer.parseInt(tableSpans.get(0).text());
 				numbers[1] = Integer.parseInt(tableSpans.get(1).text());
@@ -61,11 +83,25 @@ public class NumberCollector {
 				numbers[5] = Integer.parseInt(tableSpans.get(5).text());
 				numbers[6] = Integer.parseInt(tableSpans.get(6).text());
 				
+				tirages.put(date, numbers);
+				*/
 				//System.out.println(numbers.toString());
 				
-				tirages.put(date, numbers);
+				tirages.put(date,  new int[] {Integer.parseInt(tableSpans.get(0).text()),
+						                      Integer.parseInt(tableSpans.get(1).text()), 
+						                      Integer.parseInt(tableSpans.get(2).text()),
+						                      Integer.parseInt(tableSpans.get(3).text()),
+						                      Integer.parseInt(tableSpans.get(4).text()),
+						                      Integer.parseInt(tableSpans.get(5).text()),
+						                      Integer.parseInt(tableSpans.get(6).text())});
+
+				
 			}
 			
+
+	        writer.flush();
+	        writer.close();
+
 			
 		}catch(Exception e) {
 			e.printStackTrace();

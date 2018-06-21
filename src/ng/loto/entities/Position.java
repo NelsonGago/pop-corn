@@ -23,7 +23,7 @@ public class Position {
 		
 	}
 	
-	public void addMember(int pMember) {
+	public void addMember(Integer pMember) {
 		
 		// if not added add it 
 		if(!positionMembers.contains(pMember)) positionMembers.add(pMember);
